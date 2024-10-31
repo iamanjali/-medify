@@ -1,6 +1,18 @@
-import { Link, Stack, Container, Box, Typography, useMediaQuery } from "@mui/material";
+import {
+  Button,
+  Link,
+  Stack,
+  Container,
+  Box,
+  Typography,
+  useMediaQuery,
+  IconButton,
+} from "@mui/material";
 import { useState } from "react";
-import logo from "../assests/logo.png"
+import logo from "../assests/logo.png";
+import styles from "./Navbar.module.css";
+import CloseIcon from "@mui/icons-material/Close";
+import MenuIcon from "@mui/icons-material/Close";
 
 function Navbar() {
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -16,8 +28,50 @@ function Navbar() {
       </Box>
 
       <Container mazWidth="xl">
-        <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between" py={2}>
-            <Link to="/"><img src={logo} alt="Logo" height={27}/></Link>
+        <Stack
+          direction="row"
+          spacing={2}
+          alignItems="center"
+          justifyContent="space-between"
+          py={2}
+        >
+          <Link to="/">
+            <img src={logo} alt="Logo" height={27} />
+          </Link>
+
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            spacing={4}
+            alignItems={{ xs: "flex-start", md: "center" }}
+            className={[styles.navLink, menuOpen && styles.active]}
+            pt={{ xs: 12, md: 1 }}
+            pb={{ xs: 4, md: 1 }}
+            px={{ xs: 4, md: 0 }}
+          >
+            <Link>Find Doctors</Link>
+            <Link to="/search">Hospitals</Link>
+            <Link>Medicines</Link>
+            <Link>Surgerise</Link>
+            <Link>Facilities</Link>
+            <Link to="/my-bookings">
+              <Button variant="contained" disabledElvation>
+                My Bookings
+              </Button>
+            </Link>
+
+            {isMobile && (
+              <IconButton
+                onClick={() => setMenuOpen(false)}
+                sx={{ position: "absolute", top: 0, right: 32, color: "#fff" }}
+              >
+                <CloseIcon />
+              </IconButton>
+            )}
+          </Stack>
+
+          {isMobile && (
+            <IconButton onClick={() => setMenuOpen(true)}><MenuIcon /></IconButton>
+          )}
         </Stack>
       </Container>
     </header>
